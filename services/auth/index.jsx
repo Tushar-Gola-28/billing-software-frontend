@@ -30,3 +30,16 @@ export const loginVendor = async (data) => {
         return err
     }
 }
+export const logoutVendor = async () => {
+    try {
+        const response = await api.post("/service/customer_service/v1/logout")
+        return response.data || []
+    } catch (err) {
+        console.log(err.response.data.message);
+        if (err.response.data.message) {
+            notify(err.response.data.message)
+        }
+
+        return err
+    }
+}

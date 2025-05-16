@@ -14,7 +14,7 @@ export function PageStructure({ title, children, navigate, noIcon, headerStyle, 
                         alt="icon"
                         height="25px"
                         width="25px"
-                        src={"/public/images/icons/back.svg"}
+                        src={"/images/icons/back.svg"}
 
                         onClick={() => router.push(navigate ? navigate : -1)}
                         style={{ cursor: 'pointer' }}

@@ -36,7 +36,7 @@ export function CustomModal({ children, open, close, heading, action, size, icon
                             </Typography>
                         </Box>
                         <IconButton onClick={close}>
-                            <Box component="img" src={"/public/images/icons/cancel.svg"} />
+                            <Box component="img" src={"/images/icons/cancel.svg"} />
                         </IconButton>
                     </Stack>
                 </DialogTitle>

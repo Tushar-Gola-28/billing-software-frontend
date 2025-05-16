@@ -40,6 +40,7 @@ const MenuItem = ({
     handleDrawerToggle,
     setMobileOpen,
     closePopup,
+    handleHover
 }) => {
     "use client"
     return (
@@ -60,6 +61,7 @@ const MenuItem = ({
                 closePopup();
                 setMobileOpen(false);
             }}
+            onMouseEnter={() => handleHover(path)}
             key={label}
         >
             {icon && (
@@ -248,46 +250,24 @@ const Sidebar = ({
         {
 
             icon: "https://ticketsque-public.s3.ap-south-1.amazonaws.com/icons/Events.svg",
-            label: "Events Meta",
+            label: "Dashboard",
             order: 0,
             parent: null,
-            path: "/event",
+            path: "/dashboard",
             children: []
         },
         {
             icon: "https://ticketsque-public.s3.ap-south-1.amazonaws.com/icons/Events.svg",
-            label: "Event Group Meta",
+            label: "Catalogues",
             order: 0,
             parent: null,
-            path: "/event-group",
+            path: "/catalogues",
             children: []
-        },
-        {
-
-            icon: "https://ticketsque-public.s3.ap-south-1.amazonaws.com/icons/Events.svg",
-            label: "Venue Meta",
-            order: 0,
-            parent: null,
-            path: "/venue",
-            children: []
-        },
-        {
-            icon: "https://ticketsque-public.s3.ap-south-1.amazonaws.com/icons/Events.svg",
-            label: "URL Meta",
-            order: 0,
-            parent: null,
-            path: "/url",
-            children: []
-        },
-        {
-            icon: "https://ticketsque-public.s3.ap-south-1.amazonaws.com/icons/Events.svg",
-            label: "Blog Meta",
-            order: 0,
-            parent: null,
-            path: "/blogs",
-            children: []
-        },
+        }
     ]
+    const handleHover = (path) => {
+        router.prefetch(path);
+    };
     const [isMounted, setIsMounted] = useState(false);
 
     useEffect(() => {
@@ -427,6 +407,7 @@ const Sidebar = ({
                                     onClick={(e) =>
                                         handleItemClick(e, path, label, children.length)
                                     }
+                                    onMouseEnter={() => handleHover(path)}
                                 >
                                     {icon && (
                                         <ListItemIcon
@@ -503,6 +484,7 @@ const Sidebar = ({
                                                     activeLink={activeLink}
                                                     setActiveLink={setActiveLink}
                                                     router={router}
+                                                    handleHover={handleHover}
                                                 />
                                             ))}
                                     </List>
@@ -546,6 +528,7 @@ const Sidebar = ({
                                                         activeLink={activeLink}
                                                         setActiveLink={setActiveLink}
                                                         router={router}
+                                                        handleHover={handleHover}
                                                     />
                                                 ))}
                                         </List>
@@ -718,6 +701,7 @@ const Sidebar = ({
                                                         router={router}
                                                         setMobileOpen={setMobileOpen}
                                                         closePopup={closePopup}
+                                                        handleHover={handleHover}
                                                     />
                                                 ))}
                                         </List>

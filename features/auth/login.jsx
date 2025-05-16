@@ -57,6 +57,7 @@ export function Login() {
             ...values,
         }, {
             onSuccess: (data) => {
+                localStorage.setItem("user-info", JSON.stringify(data.user))
                 router.push("/dashboard")
             }
         })
@@ -108,12 +109,16 @@ export function Login() {
                 </Grid>
                 <Grid size={{ xs: 12, md: 7 }}>
                     <Box sx={{ padding: { xs: "10px", md: "30px 60px" }, background: "white", height: "calc(100vh - 60px)", mt: { md: "60px" }, borderTopLeftRadius: { md: "80px" }, boxShadow: (theme) => ({ md: `10px 10px 15px ${theme.palette.primary.main}` }) }}>
-                        <Stack direction="row" gap="10px" alignItems="center" sx={{ margin: { xs: "60px 0 20px 0", md: "10px 0 20px 0" } }}>
+                        <Box sx={{ position: 'relative', width: '100%', maxWidth: '200px', aspectRatio: '5 / 2', display: { xs: "flex", md: "none" } }}>
+                            <Image src="/images/logo/logo.svg" alt='Logo' fill
+                                style={{ objectFit: 'contain' }} />
+                        </Box>
+                        <Stack direction="row" gap="10px" alignItems="center" sx={{ margin: { xs: "40px 0 10px 0", md: "10px 0 20px 0" } }}>
                             <LoginIcon color='primary' sx={{ fontSize: "30px" }} />
                             <Typography variant="h3" sx={{ color: "primary.main" }}>Sign in to continue</Typography>
                         </Stack>
-                        <Box sx={{ width: '100%', padding: "0 10px", display: "flex", flexDirection: "column", justifyContent: "space-between", alignItems: "center", height: "calc(100% - 80px)" }}>
-                            <Stack spacing={2} sx={{ pt: 6, maxWidth: "450px", margin: "0 auto" }}>
+                        <Box component="form" onSubmit={handleSubmit} sx={{ width: '100%', padding: "0 10px", display: "flex", flexDirection: "column", justifyContent: "space-between", alignItems: "center", height: "calc(100% - 80px)" }}>
+                            <Stack spacing={2} sx={{ pt: { xs: 1, md: 6 }, maxWidth: "450px", margin: "0 auto" }}>
                                 <Grid container spacing={3}>
                                     <Grid size={12}>
                                         <Typography sx={{ color: "primary.main" }} variant="body2" fontSize="15px">
@@ -171,7 +176,7 @@ export function Login() {
                                         }
                                     />
                                     <Grid size={12}>
-                                        <Button loading={mutation.isPending} variant="contained" fullWidth onClick={handleSubmit}>
+                                        <Button loading={mutation.isPending} type='submit' disabled={mutation.isPending} variant="contained" fullWidth onClick={handleSubmit}>
                                             Submit
                                         </Button>
                                         <Stack direction="row" alignItems="center" gap="5px" sx={{ mt: "20px" }}>
