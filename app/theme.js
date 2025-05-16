@@ -410,7 +410,7 @@ const theme = createTheme({
     MuiTableCell: {
       styleOverrides: {
         head: {
-          color: "#0276E5",
+          color: "#33289E",
           fontWeight: 500,
           minWidth: "110px",
           flexShrink: 0,
@@ -441,7 +441,7 @@ const theme = createTheme({
     MuiTableSortLabel: {
       styleOverrides: {
         head: {
-          color: "#0276E5",
+          color: "#33289E",
           fontWeight: 500,
           minWidth: "110px",
           flexShrink: 0,
@@ -491,6 +491,7 @@ const theme = createTheme({
           boxShadow: "2px 4px 16px -5px rgba(2, 118, 229, 0.10)",
           borderRadius: "8px",
           border: "1px solid #FBFBFB",
+          padding:"10px"
         },
       },
     },

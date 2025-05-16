@@ -18,8 +18,7 @@ export function CustomPagination({ page, page_size, total_records, setPage, tota
                 alignSelf={{ xs: "center", sm: "auto" }}
             >
                 <Typography
-                    sx={{ textAlign: { xs: "center", sm: "normal" } }}
-                    color="primary"
+                    sx={{ textAlign: { xs: "center", sm: "normal",  },color: "primary.main" }}
                     variant="body1"
                 >{`Showing ${page !== 0 ? page * page_size : 1}  to ${(page + 1) * page_size > total_records
                     ? total_records

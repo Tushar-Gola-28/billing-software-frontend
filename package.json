@@ -23,6 +23,7 @@
     "google-libphonenumber": "^3.2.40",
     "js-cookie": "^3.0.5",
     "jwt-decode": "^4.0.0",
+    "lodash": "^4.17.21",
     "next": "15.3.1",
     "notistack": "^3.0.2",
     "react": "^19.0.0",
