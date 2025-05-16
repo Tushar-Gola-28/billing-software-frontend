@@ -18,6 +18,7 @@ export default function RootLayout({ children }) {
         <link
           href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,200;9..40,300;9..40,400;9..40,500&family=Open+Sans:wght@300;400;500;600;700;800&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
           rel="stylesheet" />
+        <link rel="icon" href="/images/logo/small_log.svg" sizes="any" />
       </head>
       <body className={`${geistSans.className} ${inter.className}`}>
         <AppRouterCacheProvider options={{ key: 'css' }}>

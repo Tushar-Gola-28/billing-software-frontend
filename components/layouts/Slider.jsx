@@ -249,7 +249,7 @@ const Sidebar = ({
     const organizedMenu1 = [
         {
 
-            icon: "https://ticketsque-public.s3.ap-south-1.amazonaws.com/icons/Events.svg",
+            icon: "https://ticketsque-public.s3.ap-south-1.amazonaws.com/icons/dashboard.svg",
             label: "Dashboard",
             order: 0,
             parent: null,
@@ -257,7 +257,7 @@ const Sidebar = ({
             children: []
         },
         {
-            icon: "https://ticketsque-public.s3.ap-south-1.amazonaws.com/icons/Events.svg",
+            icon: "http://ticketsque-public.s3.ap-south-1.amazonaws.com/icons/add_drinks.svg",
             label: "Catalogues",
             order: 0,
             parent: null,

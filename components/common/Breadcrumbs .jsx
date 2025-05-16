@@ -15,7 +15,7 @@ const Breadcrumbs = () => {
     };
 
     return (
-        <nav style={{ display: "flex" }} aria-label="breadcrumb">
+        <nav style={{ display: "flex" ,mb:4}} aria-label="breadcrumb">
             <Typography variant="body1" sx={{fontStyle:"italic"}}>
                 <Link href="/" className="text-blue-600 hover:underline">Home</Link>
             </Typography>
