@@ -17,6 +17,8 @@ import {
     ListItemIcon,
     ListItemText,
     Popover,
+    Skeleton,
+    Typography,
 } from "@mui/material";
 import Grid from '@mui/material/Grid'
 
@@ -38,67 +40,70 @@ const MenuItem = ({
     handleDrawerToggle,
     setMobileOpen,
     closePopup,
-}) => (
-    <ListItemButton
-        sx={{
-            pl: open ? 5 : 0 && mobileOpen && 0,
-            margin: "0.5rem 1rem",
-            background: activeLink === path ? "#0276E5" : "",
-            borderRadius: "0.25rem",
-            "&:hover": {
-                backgroundColor: activeLink === path ? "#0276E5" : "",
-            },
-        }}
-        onClick={() => {
-            router.push(path || "");
-            setActiveLink(path);
-            mobileOpen && handleDrawerToggle();
-            closePopup();
-            setMobileOpen(false);
-        }}
-        key={label}
-    >
-        {icon && (
-            <ListItemIcon
-                sx={{
-                    minWidth: 0,
-                    mr: 1,
-                    justifyContent: "center",
-                }}
-            >
-                <Box
-                    component="img"
-                    src={icon}
-                    alt="Campaign"
-                    sx={{
-                        display: "block",
-                        marginLeft: "6px",
-                        filter:
-                            activeLink === path &&
-                            "brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%)",
-                    }}
-                />
-            </ListItemIcon>
-        )}
-        <ListItemText
-            primary={label}
+}) => {
+    "use client"
+    return (
+        <ListItemButton
             sx={{
-                span: {
-                    color: {
-                        textDecoration: "none",
-                        display: "flex",
-                        justifyContent: "flex-start",
-                        alignItems: "center",
-                        color: activeLink === path ? "#FFFFFF" : "#2A2A2A",
-                        width: "100%",
-                        fontSize: "0.875rem",
-                        fontWeight: 500,
-                    },
+                pl: open ? 5 : 0 && mobileOpen && 0,
+                margin: "0.5rem 1rem",
+                background: activeLink === path ? "#0276E5" : "",
+                borderRadius: "0.25rem",
+                "&:hover": {
+                    backgroundColor: activeLink === path ? "#0276E5" : "",
                 },
             }}
-        />
-    </ListItemButton>
-);
+            onClick={() => {
+                router.push(path || "");
+                setActiveLink(path);
+                mobileOpen && handleDrawerToggle();
+                closePopup();
+                setMobileOpen(false);
+            }}
+            key={label}
+        >
+            {icon && (
+                <ListItemIcon
+                    sx={{
+                        minWidth: 0,
+                        mr: 1,
+                        justifyContent: "center",
+                    }}
+                >
+                    <Box
+                        component="img"
+                        src={icon}
+                        alt="Campaign"
+                        sx={{
+                            display: "block",
+                            marginLeft: "6px",
+                            filter:
+                                activeLink === path &&
+                                "brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%)",
+                        }}
+                    />
+                </ListItemIcon>
+            )}
+            <ListItemText
+                primary={label}
+                sx={{
+                    span: {
+                        color: {
+                            textDecoration: "none",
+                            display: "flex",
+                            justifyContent: "flex-start",
+                            alignItems: "center",
+                            color: activeLink === path ? "#FFFFFF" : "#2A2A2A",
+                            width: "100%",
+                            fontSize: "0.875rem",
+                            fontWeight: 500,
+                        },
+                    },
+                }}
+            />
+        </ListItemButton>
+    )
+};
 
 const Sidebar = ({
     handleDrawer,
@@ -282,10 +287,62 @@ const Sidebar = ({
             path: "/blogs",
             children: []
         },
-
-
-
     ]
+    const [isMounted, setIsMounted] = useState(false);
+
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
+    if (!isMounted) {
+        return (
+            <Drawer
+                variant="permanent"
+                // ref={drawerRef}
+                open={open}
+                sx={{
+                    "& .MuiDrawer-paper": {
+                        borderRadius: "0px",
+                        border: "0px",
+                        overflowY: "visible",
+                    },
+                }}
+            >
+
+                <Box sx={{ position: "relative" }}>
+                    <CompanyLogo open={open} />
+                    <IconButton
+                        sx={{
+                            position: "absolute",
+                            top: "50%",
+                            left: "98%",
+                            transform: "translateY(-50%) translateX(-50%)",
+                            minWidth: "25px",
+                            height: "25px",
+                            zIndex: "999999",
+                            p: "0",
+                            borderRadius: "50%",
+                            backgroundColor: "background.main",
+                        }}
+                        onClick={handleDrawer}
+                    >
+                        {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+                    </IconButton>
+                </Box>
+                <Box sx={{ padding: "20px 10px" }}>
+                    <Skeleton variant="rounded" width="100%" height={40} sx={{ mb: 1 }} />
+                    <Skeleton variant="rounded" width="80%" height={40} sx={{ mb: 1 }} />
+                    <Skeleton variant="rounded" width="100%" height={40} sx={{ mb: 1 }} />
+                    <Skeleton variant="rounded" width="60%" height={40} sx={{ mb: 1 }} />
+                    <Skeleton variant="rounded" width="100%" height={40} sx={{ mb: 1 }} />
+                    <Skeleton variant="rounded" width="50%" height={40} sx={{ mb: 1 }} />
+                    <Skeleton variant="rounded" width="100%" height={40} sx={{ mb: 1 }} />
+                    <Skeleton variant="rounded" width="70%" height={40} sx={{ mb: 1 }} />
+                    <Skeleton variant="rounded" width="100%" height={40} sx={{ mb: 1 }} />
+                    <Skeleton variant="rounded" width="100%" height={40} />
+                </Box>
+            </Drawer>
+        )
+    }
 
     return matches ? (
         <Drawer

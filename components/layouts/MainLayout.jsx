@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import Navbar from './NavBar';
 import { Container, Sidebar } from '..';
 import { Box } from '@mui/material';
+import Breadcrumbs from '../common/Breadcrumbs ';
 
 export function MainLayout({ children }) {
     const [open, setOpen] = useState(true);
@@ -15,14 +16,12 @@ export function MainLayout({ children }) {
     };
     const handleDrawerOpen = () => {
         setOpen(false);
-        localStorage.setItem("slidebar", false);
     };
     const handleDrawer = () => {
         setOpen(!open);
         if (open) {
             setOpenMenu([]);
         }
-        localStorage.setItem("slidebar", !open);
     };
     return (
         <div>
@@ -51,6 +50,7 @@ export function MainLayout({ children }) {
                 }}
             >
                 <Container>
+                    <Breadcrumbs/>
                     {children}
                 </Container>
             </Box>
