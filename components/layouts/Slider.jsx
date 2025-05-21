@@ -343,7 +343,7 @@ const Sidebar = ({
                     sx={{
                         position: "absolute",
                         top: "50%",
-                        left: "98%",
+                        left: open ? "103%" : "110%",
                         transform: "translateY(-50%) translateX(-50%)",
                         minWidth: "25px",
                         height: "25px",

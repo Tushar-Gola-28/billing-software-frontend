@@ -8,7 +8,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { Box, IconButton, Stack, Typography } from "@mui/material";
 
 
-export function CustomModal({ children, open, close, heading, action, size, icon, headingColor, canceltext, extraButton, iconClick }) {
+export function CustomModal({ children, open, close, heading, action, size, icon, headingColor, cancelText, extraButton, iconClick, component, boxContent, onSubmit, id }) {
     return (
         <React.Fragment>
             <Dialog
@@ -20,7 +20,7 @@ export function CustomModal({ children, open, close, heading, action, size, icon
                 fullWidth
                 maxWidth={size ? size : "sm"}
             >
-                <DialogTitle id="scroll-dialog-title">
+                <DialogTitle id="scroll-dialog-title" sx={{ padding: "5px 10px" }}>
                     <Stack
                         direction="row"
                         justifyContent="space-between"
@@ -40,12 +40,14 @@ export function CustomModal({ children, open, close, heading, action, size, icon
                         </IconButton>
                     </Stack>
                 </DialogTitle>
-                <DialogContent dividers={true}>
-                    {children}
+                <DialogContent dividers={true} sx={{ width: "100%" }}>
+                    <Box component={component}  {...boxContent} onSubmit={onSubmit} id={id}>
+                        {children}
+                    </Box>
                 </DialogContent>
                 <DialogActions sx={{ display: "flex", flexDirection: "column", padding: "10px 20px", justifyContent: "flex-end" }}>
-                    <Box sx={{ display: "flex", justifyContent: "space-between", padding: "0px 0px 5px 5px", width: "100%" }}>
-                        <Button type='button' variant='outlined' onClick={close}>{canceltext || 'Cancel'}</Button>
+                    <Box sx={{ display: "flex", justifyContent: "space-between", width: "100%" }}>
+                        <Button type='button' variant='outlined' onClick={close}>{cancelText || 'Cancel'}</Button>
                         {action}
                     </Box>
                     {extraButton}

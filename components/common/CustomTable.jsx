@@ -74,7 +74,6 @@ export function CustomTable({ columns = [], rows = [], loading, imageUrl = "", e
           maxHeight: maxHeight ? `${maxHeight}px` : "auto",
           overflow: "auto",
           ...ScrollBarDesign,
-          mt: 3
         }}
       >
         <Table stickyHeader aria-label="sticky table" sx={{ borderSpacing: "0" }}>

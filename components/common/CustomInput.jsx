@@ -12,8 +12,8 @@ export function CustomInput({ label, required, input, size }) {
     return (
         <FormGrid size={size || { xs: 12, md: 6 }}>
             <Stack spacing={.4}>
-                <FormLabel htmlFor={label} required={required} sx={{ display: "flex" }}>
-                    <Typography variant="body2">{label}</Typography>
+                <FormLabel htmlFor={label} error={required} required={required} sx={{ display: "flex" }}>
+                    <Typography variant="body2" >{label}</Typography>
                 </FormLabel>
                 {input}
             </Stack>

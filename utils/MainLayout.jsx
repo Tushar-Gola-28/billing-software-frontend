@@ -12,6 +12,9 @@ const queryClient = new QueryClient({
             refetchOnWindowFocus: false, // default: true
         },
     },
+    experimental: {
+        prefetchInRender: true,
+    }
 })
 export default function MainLayout({ children }) {
     return (
