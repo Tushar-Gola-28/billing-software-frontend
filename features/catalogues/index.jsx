@@ -1,3 +1,6 @@
 export * from './catalogues-page'
 export * from './hooks'
 export * from './modals'
+export * from './variant-page'
+export * from './all-variants-page'
+export * from './add-on-page'

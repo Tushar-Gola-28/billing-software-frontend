@@ -21,7 +21,7 @@ export function CataloguesPage() {
     const { open, handleCloseModal, handleOpenModal } = useModalControl()
     const { open: isMenu, handleCloseModal: handleMenuCloseModal, handleOpenModal: handleMenuOpenModal } = useModalControl()
     const { editData, handleEditData } = useEditData()
-    const { columns } = useColumns(handleEditData, handleOpenModal)
+    const { columns } = useColumns(handleEditData, handleOpenModal,handleMenuOpenModal)
     const [value, setValue] = useState();
 
 
@@ -56,8 +56,8 @@ export function CataloguesPage() {
     }, [data?.data])
     useEffect(() => {
         if (menuData?.data) {
-            setTotalPages(data?.data?.totalPages)
-            setTotal_records(data?.data?.total_records)
+            setTotalPages(menuData?.data?.totalPages)
+            setTotal_records(menuData?.data?.total_records)
         }
     }, [menuData?.data])
 
@@ -114,7 +114,7 @@ export function CataloguesPage() {
                 </TabContext>
             </Stack>
             {open && <CategoryModal open={open} close={() => { handleCloseModal(); handleEditData(null) }} handleReload={() => data.refetch()} editData={editData} />}
-            {isMenu && <MenuModal open={isMenu} close={() => { handleMenuCloseModal(); handleEditData(null) }} handleReload={() => data.refetch()} editData={editData} />}
+            {isMenu && <MenuModal open={isMenu} close={() => { handleMenuCloseModal(); handleEditData(null) }} handleReload={() => menuData.refetch()} editData={editData} />}
         </div>
     )
 }

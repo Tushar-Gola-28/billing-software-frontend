@@ -1,11 +1,14 @@
 "use client"
-import { CustomInput, CustomModal, notify } from '@/components'
-import { addCategories, updateCategories } from '@/services'
+import { CustomInput, CustomModal, LoadingScreen, notify } from '@/components'
+import { addCategories, addMenu, fetchAllActiveCategories, updateMenu } from '@/services'
 import { Button, Grid, MenuItem, TextField } from '@mui/material'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
+import { useRouter, useSearchParams } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
 export function MenuModal({ open, close, handleReload, editData }) {
+    const router = useRouter();
+    const searchParams = useSearchParams();
     const [values, setValues] = useState({
         category_id: "",
         qty: "",
@@ -30,14 +33,20 @@ export function MenuModal({ open, close, handleReload, editData }) {
     }
     const mutation = useMutation({
         mutationFn: (data) => {
-            return addCategories(data)
+            return addMenu(data)
         },
     })
     const updateMutation = useMutation({
         mutationFn: (data) => {
-            return updateCategories(data)
+            return updateMenu(data)
         },
     })
+    const categories = useQuery({
+        queryKey: ["Active Categories"],
+        queryFn: ({ signal }) => fetchAllActiveCategories(signal)
+
+    })
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         if (editData) {
@@ -45,6 +54,9 @@ export function MenuModal({ open, close, handleReload, editData }) {
                 onSuccess: (data) => {
                     if (data) {
                         notify("Category Update Successfully.", "success")
+                        const params = new URLSearchParams(searchParams);
+                        params.set('tab', "menu");
+                        router.push(`?${params.toString()}`);
                         close()
                         handleReload()
                     }
@@ -57,6 +69,9 @@ export function MenuModal({ open, close, handleReload, editData }) {
                 onSuccess: (data) => {
                     if (data) {
                         notify("Category Created Successfully.", "success")
+                        const params = new URLSearchParams(searchParams);
+                        params.set('tab', "menu");
+                        router.push(`?${params.toString()}`);
                         close()
                         handleReload()
                     }
@@ -68,18 +83,20 @@ export function MenuModal({ open, close, handleReload, editData }) {
     }
     useEffect(() => {
         if (editData) {
+            const { category, code, status, qty, note, name, price, discount, type, total_price_with_gst, gst_percentage, _id } = editData
             setValues({
-                category_id: "",
-                qty: "",
-                name: "",
-                note: "",
-                code: "",
-                price: "",
-                discount: "",
-                type: "",
-                status: "true",
-                gst_percentage: "",
-                total_price_with_gst: ""
+                category_id: category?._id,
+                qty: qty,
+                name: name,
+                note: note,
+                code: code,
+                status: status,
+                price: price,
+                discount: discount,
+                type: type,
+                gst_percentage: gst_percentage,
+                total_price_with_gst: total_price_with_gst,
+                _id: _id
             })
         }
     }, [editData])
@@ -92,15 +109,15 @@ export function MenuModal({ open, close, handleReload, editData }) {
             const taxableAmount = price - discount;
             const gstAmount = (taxableAmount * gstPercentage) / 100;
             const totalPriceWithGst = taxableAmount + gstAmount;
-
-            console.log(totalPriceWithGst, "total_price_with_gst");
-
             setValues((prev) => ({
                 ...prev,
                 total_price_with_gst: totalPriceWithGst,
             }));
         }
     }, [values.price, values.discount, values.gst_percentage]);
+    if (categories.isLoading) {
+        return <LoadingScreen />
+    }
     return (
         <div>
             <CustomModal size="md" component="form" onSubmit={handleSubmit} id="Menu" open={open} close={close} heading={editData ? "Update Menu" : "Create Menu"} action={<Button loading={mutation.isPending || updateMutation.isPending} disabled={mutation.isPending || updateMutation.isPending} type='submit' form="Menu" variant="contained">{editData ? "Update" : "Create"}</Button>}>
@@ -109,7 +126,13 @@ export function MenuModal({ open, close, handleReload, editData }) {
                         label="Select Category"
                         input={
                             <TextField fullWidth select placeholder='Enter Name...' value={values.category_id} name='category_id' onChange={handleChange} >
-                                <MenuItem></MenuItem>
+                                {
+                                    categories?.data?._payload?.map((it) => {
+                                        return (
+                                            <MenuItem key={it._id} value={it._id}>{it.name}</MenuItem>
+                                        )
+                                    })
+                                }
                             </TextField>
                         }
                         required
@@ -163,7 +186,7 @@ export function MenuModal({ open, close, handleReload, editData }) {
                     <CustomInput
                         label="GSt With Percentage"
                         input={
-                            <TextField fullWidth placeholder='Enter GSt...' value={values.gst_percentage} name='gst_percentage' onChange={handleChange} />
+                            <TextField fullWidth placeholder='Enter GSt...' value={values.gst_percentage || ""} name='gst_percentage' onChange={handleChange} />
                         }
                         required
                     />
@@ -171,7 +194,7 @@ export function MenuModal({ open, close, handleReload, editData }) {
                         label="Total Price With GST"
                         size={12}
                         input={
-                            <TextField fullWidth disabled placeholder='Enter GSt...' value={values.total_price_with_gst} name='total_price_with_gst' />
+                            <TextField fullWidth disabled placeholder='Enter GSt...' value={values.total_price_with_gst || ""} name='total_price_with_gst' />
                         }
                         required
                     />

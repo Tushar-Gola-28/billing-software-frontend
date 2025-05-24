@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 export function PageStructure({ title, children, navigate, noIcon, headerStyle, content }) {
     const router = useRouter()
     return (
-        <Paper sx={{ padding: { xs: "10px", sm: "20px 20px" } }}>
+        <Paper sx={{ padding: { xs: "10px", sm: "20px 20px" }, mt: 2 }}>
             <Stack direction='row' justifyContent='space-between' alignItems='center'>
                 <Stack spacing={2} direction="row" marginBottom="15px" >
 
@@ -16,12 +16,12 @@ export function PageStructure({ title, children, navigate, noIcon, headerStyle, 
                         width="25px"
                         src={"/images/icons/back.svg"}
 
-                        onClick={() => router.push(navigate ? navigate : -1)}
+                        onClick={() => navigate ? router.push(navigate) : router.back()}
                         style={{ cursor: 'pointer' }}
                     />}
                     <Stack spacing={1} width="100%">
                         <Stack direction="row" sx={headerStyle} marginBottom="10px">
-                            <Typography color="primary" variant="h4">
+                            <Typography color="primary" variant="h4" sx={{ color: "primary.main" }}>
                                 {title}
                             </Typography>
                         </Stack>
