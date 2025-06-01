@@ -85,14 +85,14 @@ export function VariantPage({ menu_tracking_id, id }) {
             mutation.mutate({ ...values }, {
                 onSuccess: () => {
                     notify("Variant Created successfully.", "success")
-                    router.back()
+                    router.push("/variants")
                 }
             })
         } else {
             updateMutation.mutate({ ...values }, {
                 onSuccess: () => {
                     notify("Variant Update successfully.", "success")
-                    router.back()
+                    router.push("/variants")
                 }
             })
         }

@@ -45,7 +45,8 @@ export function Login() {
 
 
 
-    const handleSubmit = () => {
+    const handleSubmit = (e) => {
+        e.preventDefault()
         const { email, password } = values
         if (!email) {
             return notify("Email is required.")

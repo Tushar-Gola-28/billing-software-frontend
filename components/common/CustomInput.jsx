@@ -1,5 +1,5 @@
 "use client"
-import React from 'react'
+import React, { memo } from 'react'
 import { FormLabel, Grid, Stack, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
@@ -8,7 +8,7 @@ const FormGrid = styled(Grid)(() => ({
     flexDirection: 'column',
 }));
 
-export function CustomInput({ label, required, input, size }) {
+const CustomInput = memo(({ label, required, input, size }) => {
     return (
         <FormGrid size={size || { xs: 12, md: 6 }}>
             <Stack spacing={.4}>
@@ -19,4 +19,5 @@ export function CustomInput({ label, required, input, size }) {
             </Stack>
         </FormGrid>
     )
-}
+})
+export { CustomInput }

@@ -21,6 +21,10 @@ export const fetchAllVariants = async (signal, page, page_size, search) => {
     const response = await api.get("/service/catalogue_service/v1/variant", { signal, params: { page, page_size, search } })
     return response.data || []
 }
+export const fetchAllAddons = async (signal, page, page_size, search) => {
+    const response = await api.get("/service/catalogue_service/v1/add-ons", { signal, params: { page, page_size, search } })
+    return response.data || []
+}
 export const fetchVariantsByID = async (signal, variant) => {
     const response = await api.get(`/service/catalogue_service/v1/variant/${variant}`, { signal })
     return response.data || []
@@ -71,6 +75,19 @@ export const updateVariant = async (data) => {
 export const addMenu = async (data) => {
     try {
         const response = await api.post("/service/catalogue_service/v1/menu", data)
+        return response.data || []
+    } catch (err) {
+        console.log(err.response.data);
+        if (err.response.data.message) {
+            notify(err.response.data.message)
+        }
+
+        throw new Error(err.response.data.message)
+    }
+}
+export const addVariantAddOns = async (data) => {
+    try {
+        const response = await api.post("/service/catalogue_service/v1/add-variant-add-ons", data)
         return response.data || []
     } catch (err) {
         console.log(err.response.data);

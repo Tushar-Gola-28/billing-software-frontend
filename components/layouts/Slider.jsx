@@ -58,8 +58,12 @@ const MenuItem = ({
                 router.push(path || "");
                 setActiveLink(path);
                 mobileOpen && handleDrawerToggle();
-                closePopup();
-                setMobileOpen(false);
+                if (closePopup) {
+                    closePopup();
+                }
+                if (setMobileOpen) {
+                    setMobileOpen(false);
+                }
             }}
             onMouseEnter={() => handleHover(path)}
             key={label}
@@ -129,7 +133,8 @@ const Sidebar = ({
     const pathname = usePathname()
     const fullPath = pathname;
     const baseRoute = `/${fullPath.split("/")[1]}`;
-    const [activeLink, setActiveLink] = useState(removeTrailingSlash(baseRoute));
+
+    const [activeLink, setActiveLink] = useState(removeTrailingSlash(fullPath));
     const [anchorEl, setAnchorEl] = useState(null);
     const [openPopupData, setOpenPopupData] = useState("");
     const listRef = useRef(null);  // Ref for the scrollable list
@@ -258,12 +263,35 @@ const Sidebar = ({
         },
         {
             icon: "http://ticketsque-public.s3.ap-south-1.amazonaws.com/icons/add_drinks.svg",
-            label: "Catalogues",
+            label: "Catalogue Hub",
             order: 0,
             parent: null,
             path: "/catalogues",
-            children: []
-        }
+            children: [
+                {
+                    icon: "http://ticketsque-public.s3.ap-south-1.amazonaws.com/icons/add_drinks.svg",
+                    label: "Catalogues",
+                    order: 0,
+                    parent: null,
+                    path: "/catalogues",
+                },
+                {
+                    icon: "http://ticketsque-public.s3.ap-south-1.amazonaws.com/icons/add_drinks.svg",
+                    label: "Variants",
+                    order: 0,
+                    parent: null,
+                    path: "/variants",
+                },
+                {
+                    icon: "http://ticketsque-public.s3.ap-south-1.amazonaws.com/icons/add_drinks.svg",
+                    label: "Add Ons",
+                    order: 0,
+                    parent: null,
+                    path: "/add-ons",
+                }
+            ]
+        },
+        ,
     ]
     const handleHover = (path) => {
         router.prefetch(path);
@@ -485,6 +513,7 @@ const Sidebar = ({
                                                     setActiveLink={setActiveLink}
                                                     router={router}
                                                     handleHover={handleHover}
+
                                                 />
                                             ))}
                                     </List>
@@ -516,7 +545,7 @@ const Sidebar = ({
                                     <Collapse in={isPopoverOpen} timeout="auto" unmountOnExit>
                                         <List component="div" disablePadding>
                                             {organizedMenu1
-                                                ?.find((item) => item.label === openPopupData)
+                                                ?.find((item) => item?.label === openPopupData)
                                                 ?.children
                                                 ?.map(({ path, label, icon }) => (
                                                     <MenuItem

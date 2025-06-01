@@ -30,6 +30,7 @@ export function MainLayout({ children }) {
                 handleDrawerOpen={handleDrawerOpen}
                 open={open}
             />
+            
             <Sidebar
                 mobileOpen={mobileOpen}
                 handleDrawerToggle={handleDrawerToggle}

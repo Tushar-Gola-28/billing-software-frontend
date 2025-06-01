@@ -30,12 +30,29 @@ export function useColumns(handleEditData, handleOpenModal, handleMenuOpenModal)
             {
                 id: "description",
                 label: "Description",
+                renderCell: (row, index) => {
+                    return row?.description || "-"
+                }
             },
             {
                 id: "Total Menus",
                 label: "Total Menus",
                 renderCell: (row, index) => {
                     return row?.menuData?.length || 0
+                }
+            },
+            {
+                id: "user",
+                label: "Created By",
+                renderCell: (row, index) => {
+                    return row?.user?.name || "-"
+                }
+            },
+            {
+                id: "updatedBy",
+                label: "Updated By",
+                renderCell: (row, index) => {
+                    return row?.updatedBy?.name || "-"
                 }
             },
             {
@@ -134,7 +151,27 @@ export function useColumns(handleEditData, handleOpenModal, handleMenuOpenModal)
                 id: "note",
                 label: "Note",
             },
-
+            {
+                id: "totalVariants",
+                label: "Total Variants",
+                renderCell: (row) => {
+                    return row?.totalVariants?.length || 0
+                }
+            },
+            {
+                id: "user",
+                label: "Created By",
+                renderCell: (row, index) => {
+                    return row?.user?.name || "-"
+                }
+            },
+            {
+                id: "updatedBy",
+                label: "Updated By",
+                renderCell: (row, index) => {
+                    return row?.updatedBy?.name || "-"
+                }
+            },
             {
                 id: "Status",
                 label: "Status",
@@ -160,7 +197,7 @@ export function useColumns(handleEditData, handleOpenModal, handleMenuOpenModal)
                                 <AddIcon />
                             </IconButton>
                         </Tooltip>
-                        <Tooltip title="View & Add On" onClick={() => router.push(`/catalogues/add-on/${row?._id}`)}>
+                        <Tooltip title="Mange Add On" onClick={() => router.push(`/catalogues/add-on/${row?._id}`)}>
                             <IconButton color="primary" >
                                 <RemoveRedEyeIcon />
                             </IconButton>
@@ -215,7 +252,20 @@ export function useVariantColumn() {
                 id: "note",
                 label: "Note",
             },
-
+            {
+                id: "user",
+                label: "Created By",
+                renderCell: (row, index) => {
+                    return row?.user?.name || "-"
+                }
+            },
+            {
+                id: "updatedBy",
+                label: "Updated By",
+                renderCell: (row, index) => {
+                    return row?.updatedBy?.name || "-"
+                }
+            },
             {
                 id: "Status",
                 label: "Status",
@@ -227,7 +277,76 @@ export function useVariantColumn() {
                 id: "Action",
                 label: "Action",
                 renderCell: (row, index) => {
-                    return <IconButton color="primary" onClick={() => { router.push(`variants/update?id=${row?._id}`) }}>
+                    return <IconButton color="primary" onClick={() => { router.push(`/catalogues/variants/update?id=${row?._id}`) }}>
+                        <EditIcon />
+                    </IconButton>
+                },
+                sticky: true
+            },
+        ],
+        "add-ons": [
+            {
+                id: "S No.",
+                label: "S No.",
+                renderCell: (_, index) => {
+                    return index + 1
+                }
+            },
+            {
+                id: "menu_tracking_id",
+                label: "Variant Id",
+                renderCell: (row, index) => {
+                    return row?.variants?.menu_tracking_id
+                }
+            },
+            {
+                id: "Variant Name",
+                label: "Variant Name",
+                renderCell: (row, index) => {
+                    return row?.variants?.name
+                }
+            },
+            {
+                id: "name",
+                label: "Name",
+            },
+            {
+                id: "Primary",
+                label: "Primary",
+                renderCell: (row, index) => {
+                    return row?.variants?.isPrimary ? "Yes" : "No"
+                }
+            },
+            {
+                id: "note",
+                label: "Note",
+            },
+            {
+                id: "user",
+                label: "Created By",
+                renderCell: (row, index) => {
+                    return row?.user?.name || "-"
+                }
+            },
+            {
+                id: "updatedBy",
+                label: "Updated By",
+                renderCell: (row, index) => {
+                    return row?.updatedBy?.name || "-"
+                }
+            },
+            {
+                id: "Status",
+                label: "Status",
+                renderCell: (row, index) => {
+                    return <Typography sx={{ color: row?.status ? "green" : "red" }}>{row?.status ? "Active" : "In Active"}</Typography>
+                }
+            },
+            {
+                id: "Action",
+                label: "Action",
+                renderCell: (row, index) => {
+                    return <IconButton color="primary" onClick={() => { router.push(`/catalogues/add-on/${row?.menu?._id}`) }}>
                         <EditIcon />
                     </IconButton>
                 },
