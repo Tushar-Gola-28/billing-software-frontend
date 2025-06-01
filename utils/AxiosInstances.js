@@ -1,4 +1,6 @@
 // api.js
+import { notify } from '@/components';
+import { logoutVendor } from '@/services';
 import axios from 'axios';
 
 
@@ -17,18 +19,21 @@ api.interceptors.request.use(
     }
 );
 
-// // Add response interceptor
-// api.interceptors.response.use(
-//     response => response,
-//     async error => {
-//         console.log(error);
-//         const originalRequest = error.config;
-//         if (error.response && error.response.status === 401 && !originalRequest._retry) {
-//             console.log(error);
+// Add response interceptor
+api.interceptors.response.use(
+    response => response,
+    async error => {
+        console.log(error);
+        const originalRequest = error.config;
+        if (error.response && error.response.status === 440 && !originalRequest._retry) {
+            console.log(error?.response?.data);
+            notify(error?.response?.data?.message)
+            logoutVendor()
+            window.location.href = "/"
 
-//         }
-//         return Promise.reject(error);
-//     }
-// );
+        }
+        return Promise.reject(error);
+    }
+);
 
 export { api };
