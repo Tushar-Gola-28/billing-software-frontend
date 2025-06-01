@@ -52,7 +52,7 @@ export function CategoryModal({ open, close, handleReload, editData }) {
             })
         } else {
 
-            mutation.mutate({ ...values, status: values.status == "false" ? false : true }, {
+            mutation.mutate({ ...values, status: values.status == "false" || values.status == false ? false : true }, {
                 onSuccess: (data) => {
                     if (data) {
                         notify("Category Created Successfully.", "success")

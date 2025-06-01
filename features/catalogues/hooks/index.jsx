@@ -346,7 +346,7 @@ export function useVariantColumn() {
                 id: "Action",
                 label: "Action",
                 renderCell: (row, index) => {
-                    return <IconButton color="primary" onClick={() => { router.push(`/catalogues/add-on/${row?.menu?._id}`) }}>
+                    return <IconButton color="primary" onClick={() => { router.push(`/catalogues/add-on/${row?.menu?._id}?type=update`) }}>
                         <EditIcon />
                     </IconButton>
                 },

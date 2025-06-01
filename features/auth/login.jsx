@@ -42,11 +42,7 @@ export function Login() {
         })
     }
 
-
-
-
     const handleSubmit = (e) => {
-        e.preventDefault()
         const { email, password } = values
         if (!email) {
             return notify("Email is required.")
@@ -58,6 +54,8 @@ export function Login() {
             ...values,
         }, {
             onSuccess: (data) => {
+                console.log(data);
+
                 localStorage.setItem("user-info", JSON.stringify(data.user))
                 router.push("/dashboard")
             }
@@ -118,7 +116,7 @@ export function Login() {
                             <LoginIcon color='primary' sx={{ fontSize: "30px" }} />
                             <Typography variant="h3" sx={{ color: "primary.main" }}>Sign in to continue</Typography>
                         </Stack>
-                        <Box component="form" onSubmit={handleSubmit} sx={{ width: '100%', padding: "0 10px", display: "flex", flexDirection: "column", justifyContent: "space-between", alignItems: "center", height: "calc(100% - 80px)" }}>
+                        <Box sx={{ width: '100%', padding: "0 10px", display: "flex", flexDirection: "column", justifyContent: "space-between", alignItems: "center", height: "calc(100% - 80px)" }}>
                             <Stack spacing={2} sx={{ pt: { xs: 1, md: 6 }, maxWidth: "450px", margin: "0 auto" }}>
                                 <Grid container spacing={3}>
                                     <Grid size={12}>
@@ -177,7 +175,7 @@ export function Login() {
                                         }
                                     />
                                     <Grid size={12}>
-                                        <Button loading={mutation.isPending} type='submit' disabled={mutation.isPending} variant="contained" fullWidth onClick={handleSubmit}>
+                                        <Button loading={mutation.isPending} type='button' disabled={mutation.isPending} variant="contained" fullWidth onClick={handleSubmit}>
                                             Submit
                                         </Button>
                                         <Stack direction="row" alignItems="center" gap="5px" sx={{ mt: "20px" }}>

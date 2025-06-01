@@ -82,14 +82,14 @@ export function VariantPage({ menu_tracking_id, id }) {
     }, [menus?.data])
     const handleSubmit = () => {
         if (!id) {
-            mutation.mutate({ ...values }, {
+            mutation.mutate({ ...values, minQty: +values?.minQty }, {
                 onSuccess: () => {
                     notify("Variant Created successfully.", "success")
                     router.push("/variants")
                 }
             })
         } else {
-            updateMutation.mutate({ ...values }, {
+            updateMutation.mutate({ ...values, minQty: +values?.minQty }, {
                 onSuccess: () => {
                     notify("Variant Update successfully.", "success")
                     router.push("/variants")

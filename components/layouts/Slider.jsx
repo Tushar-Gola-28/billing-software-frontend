@@ -715,7 +715,7 @@ const Sidebar = ({
                                     <Collapse in={isPopoverOpen} timeout="auto" unmountOnExit>
                                         <List component="div" disablePadding>
                                             {organizedMenu1
-                                                ?.find((item) => item.label === openPopupData)
+                                                ?.find((item) => item?.label === openPopupData)
                                                 ?.children
                                                 // .filter((data) => !['/table-reservation-dashboard'].includes(data?.path))
                                                 ?.map(({ path, label, icon }) => (

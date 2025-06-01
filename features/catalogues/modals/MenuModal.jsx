@@ -1,7 +1,7 @@
 "use client"
 import { CustomInput, CustomModal, LoadingScreen, notify } from '@/components'
 import { addCategories, addMenu, fetchAllActiveCategories, updateMenu } from '@/services'
-import { Button, Grid, MenuItem, TextField } from '@mui/material'
+import { Button, FormControl, FormControlLabel, Grid, MenuItem, Radio, RadioGroup, TextField, Typography } from '@mui/material'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { useRouter, useSearchParams } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
@@ -50,7 +50,15 @@ export function MenuModal({ open, close, handleReload, editData }) {
     const handleSubmit = async (e) => {
         e.preventDefault()
         if (editData) {
-            updateMutation.mutate(values, {
+            updateMutation.mutate({
+                ...values,
+                discount: +values.discount,
+                gst_percentage: +values?.gst_percentage,
+                price: +values?.price,
+                qty: +values?.qty,
+                total_price_with_gst: +values?.total_price_with_gst,
+                status: values.status == "false" || values.status == false ? false : true
+            }, {
                 onSuccess: (data) => {
                     if (data) {
                         notify("Category Update Successfully.", "success")
@@ -64,8 +72,14 @@ export function MenuModal({ open, close, handleReload, editData }) {
                 }
             })
         } else {
-
-            mutation.mutate(values, {
+            mutation.mutate({
+                ...values,
+                discount: +values.discount,
+                gst_percentage: +values?.gst_percentage,
+                price: +values?.price,
+                qty: +values?.qty,
+                total_price_with_gst: +values?.total_price_with_gst
+            }, {
                 onSuccess: (data) => {
                     if (data) {
                         notify("Category Created Successfully.", "success")
@@ -90,7 +104,7 @@ export function MenuModal({ open, close, handleReload, editData }) {
                 name: name,
                 note: note,
                 code: code,
-                status: status,
+                status: status == false ? "false" : "true",
                 price: price,
                 discount: discount,
                 type: type,
@@ -206,6 +220,21 @@ export function MenuModal({ open, close, handleReload, editData }) {
                         }
                         required
                     />
+                    <Grid size={12}>
+                        <FormControl>
+                            <Typography variant="body2">Status</Typography>
+                            <RadioGroup
+                                row
+                                value={values.status}
+                                onChange={handleChange}
+                                aria-labelledby="demo-row-radio-buttons-group-label"
+                                name="status"
+                            >
+                                <FormControlLabel value="true" control={<Radio />} label="Active" />
+                                <FormControlLabel value="false" control={<Radio />} label="Disable" />
+                            </RadioGroup>
+                        </FormControl>
+                    </Grid>
                 </Grid>
             </CustomModal>
         </div>

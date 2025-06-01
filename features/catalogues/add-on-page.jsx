@@ -8,7 +8,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useRouter } from 'next/navigation'
-export function AddOnPage({ menu }) {
+export function AddOnPage({ menu, type }) {
     const [primary, setPrimary] = useState({})
     const router = useRouter()
     const [variantsAndAddOns, setVariantsAndAddOns] = useState([])
@@ -202,7 +202,7 @@ export function AddOnPage({ menu }) {
                 }
             }
         }
-        mutation.mutate({ data: variantsAndAddOns, menu_id: menu }, {
+        mutation.mutate({ data: variantsAndAddOns, menu_id: menu, type }, {
             onSuccess: (res) => {
                 console.log(res);
                 router.back()
