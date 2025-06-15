@@ -5,8 +5,8 @@ import { Container, Sidebar } from '..';
 import { Box } from '@mui/material';
 import Breadcrumbs from '../common/Breadcrumbs ';
 
-export function MainLayout({ children }) {
-    const [open, setOpen] = useState(true);
+export function MainLayout({ children, header, slide }) {
+    const [open, setOpen] = useState(() => slide);
     const [mobileOpen, setMobileOpen] = useState(false);
     const [openMenu, setOpenMenu] = useState([
     ]);
@@ -25,13 +25,13 @@ export function MainLayout({ children }) {
     };
     return (
         <div>
-            <Navbar
+            {header && <Navbar
                 handleDrawerToggle={handleDrawerToggle}
                 handleDrawerOpen={handleDrawerOpen}
                 open={open}
-            />
-            
-            <Sidebar
+            />}
+
+            {<Sidebar
                 mobileOpen={mobileOpen}
                 handleDrawerToggle={handleDrawerToggle}
                 handleDrawer={handleDrawer}
@@ -40,7 +40,8 @@ export function MainLayout({ children }) {
                 setOpenMenu={setOpenMenu}
                 openMenu={openMenu}
                 setMobileOpen={setMobileOpen}
-            />
+                slide={slide}
+            />}
             <Box
                 component="main"
                 sx={{
@@ -51,7 +52,7 @@ export function MainLayout({ children }) {
                 }}
             >
                 <Container>
-                    <Breadcrumbs/>
+                    <Breadcrumbs />
                     {children}
                 </Container>
             </Box>

@@ -27,6 +27,7 @@ import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
+import { useFullscreen } from "@/hooks/useFullscreen";
 
 const MenuItem = ({
     path,
@@ -48,10 +49,10 @@ const MenuItem = ({
             sx={{
                 pl: open ? 5 : 0 && mobileOpen && 0,
                 margin: "0.5rem 1rem",
-                background: activeLink === path ? "#0276E5" : "",
+                background: (theme) => activeLink === path ? theme.palette.primary.main : "",
                 borderRadius: "0.25rem",
                 "&:hover": {
-                    backgroundColor: activeLink === path ? "#0276E5" : "",
+                    backgroundColor: (theme) => activeLink === path ? theme.palette.primary.main : "",
                 },
             }}
             onClick={() => {
@@ -120,9 +121,10 @@ const Sidebar = ({
     openMenu,
     setOpen,
     setMobileOpen,
+    slide
 }) => {
     const router = useRouter()
-
+    const enterFullscreen = useFullscreen();
     function removeTrailingSlash(url) {
         if (url.endsWith("/")) {
             return url.slice(0, -1);
@@ -198,6 +200,11 @@ const Sidebar = ({
             setOpenMenu([]);
 
             localStorage.setItem("menu-item", "");
+        }
+
+
+        if (path == "/pos") {
+            enterFullscreen()
         }
 
     };
@@ -291,7 +298,22 @@ const Sidebar = ({
                 }
             ]
         },
-        ,
+        {
+            icon: "http://ticketsque-public.s3.ap-south-1.amazonaws.com/icons/add_drinks.svg",
+            label: "Pos Hub",
+            order: 0,
+            parent: null,
+            path: "/pos",
+            children: [
+                {
+                    icon: "http://ticketsque-public.s3.ap-south-1.amazonaws.com/icons/add_drinks.svg",
+                    label: "Items Billing",
+                    order: 0,
+                    parent: null,
+                    path: "/pos",
+                }
+            ]
+        },
     ]
     const handleHover = (path) => {
         router.prefetch(path);
@@ -318,7 +340,7 @@ const Sidebar = ({
 
                 <Box sx={{ position: "relative" }}>
                     <CompanyLogo open={open} />
-                    <IconButton
+                    {slide && <IconButton
                         sx={{
                             position: "absolute",
                             top: "50%",
@@ -334,7 +356,7 @@ const Sidebar = ({
                         onClick={handleDrawer}
                     >
                         {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-                    </IconButton>
+                    </IconButton>}
                 </Box>
                 <Box sx={{ padding: "20px 10px" }}>
                     <Skeleton variant="rounded" width="100%" height={40} sx={{ mb: 1 }} />
@@ -367,7 +389,7 @@ const Sidebar = ({
         >
             <Box sx={{ position: "relative" }}>
                 <CompanyLogo open={open} />
-                <IconButton
+                {slide && <IconButton
                     sx={{
                         position: "absolute",
                         top: "50%",
@@ -383,7 +405,7 @@ const Sidebar = ({
                     onClick={handleDrawer}
                 >
                     {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-                </IconButton>
+                </IconButton>}
             </Box>
 
             <List
