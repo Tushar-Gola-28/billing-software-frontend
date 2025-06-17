@@ -16,7 +16,7 @@ function parseJwt(token) {
 }
 export function middleware(request) {
     const token = request.cookies.get('access_token')?.value
-    const { pathname } = request.nextUrl    
+    const { pathname } = request.nextUrl
     if (token) {
         try {
             const decoded = parseJwt(token)

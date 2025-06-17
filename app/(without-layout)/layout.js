@@ -5,7 +5,6 @@ export default function Layout({ children }) {
     return (
         <div>
             <MainLayout slide={false} header={true}>
-
                 {children}
             </MainLayout>
         </div>

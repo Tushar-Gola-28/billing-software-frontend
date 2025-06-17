@@ -203,7 +203,7 @@ const Sidebar = ({
         }
 
 
-        if (path == "/pos") {
+        if (path == "/order-create") {
             enterFullscreen()
         }
 

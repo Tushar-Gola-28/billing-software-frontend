@@ -4,8 +4,7 @@ import { NextResponse } from 'next/server'
 export async function GET(request) {
     try {
         const cookieHeader = request.headers.get('cookie')
-        
-        // Call your backend to refresh token
+
         const backendResponse = await fetch(process.env.BASE_URL + "/service/customer_service/v1/refresh-token",
             {
                 method: 'POST',
@@ -21,9 +20,6 @@ export async function GET(request) {
         }
         let data = await backendResponse.json()
         data = data._payload
-        console.log(data,"lllllllllllllll");
-        
-            
         const newAccessToken = data?.accessToken
         const refresh_token = data?.refreshToken
         const user = data?.user
